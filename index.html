@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TapPay — Multi-NFC Venmo QR</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">Tap<span>Pay</span></div>
+  <div class="badge">Multi-Tag</div>
+</header>
+
+<main>
+  <p class="tagline">Configure each NFC tag with a price &amp; message, then tap to generate a QR.</p>
+
+  <!-- STEP 1: Venmo Username -->
+  <div class="panel">
+    <div class="panel-header">
+      <div class="step-num active">1</div>
+      <div class="panel-title">Your Venmo Username</div>
+    </div>
+    <div class="panel-body">
+      <div class="input-group">
+        <div class="venmo-prefix">venmo.com/u/</div>
+        <input type="text" id="venmo-username" placeholder="your-username" autocomplete="off" spellcheck="false">
+      </div>
+      <p class="hint">💡 This applies to all NFC tags below.</p>
+    </div>
+  </div>
+
+  <!-- STEP 2: Configure Tags -->
+  <div class="panel">
+    <div class="panel-header">
+      <div class="step-num active">2</div>
+      <div class="panel-title">Configure NFC Tags</div>
+      <button class="btn-add" onclick="addTag()">+ Add Tag</button>
+    </div>
+    <div class="panel-body" style="padding:0;">
+      <div id="tags-list"></div>
+    </div>
+  </div>
+
+  <!-- STEP 3: Scan -->
+  <div class="panel">
+    <div class="panel-header">
+      <div class="step-num active">3</div>
+      <div class="panel-title">Tap an NFC Tag</div>
+    </div>
+    <div class="panel-body" style="display:flex;flex-direction:column;gap:12px;">
+      <div class="demo-notice" id="demo-notice">
+        ⚠️ <strong>Web NFC</strong> requires Chrome on Android over HTTPS.
+        Use the manual buttons below to simulate a tap for testing.
+      </div>
+      <button class="btn btn-nfc" id="nfc-btn" onclick="startNFC()">
+        <span class="btn-icon">📡</span> Scan NFC Tag
+      </button>
+      <div class="nfc-status" id="nfc-status"></div>
+      <div id="manual-btns" style="display:none; flex-direction:column; gap:8px;"></div>
+    </div>
+  </div>
+
+  <!-- QR Result -->
+  <div id="qr-section">
+    <div class="qr-card">
+      <div class="qr-header">
+        <div>
+          <div class="qr-header-title">✅ Ready to Pay</div>
+          <div class="qr-header-subtitle" id="qr-tag-label"></div>
+        </div>
+      </div>
+      <div class="qr-body">
+        <div id="qrcode"></div>
+        <div class="qr-seller-info">
+          <div class="seller-handle" id="display-handle"></div>
+          <div class="seller-amount" id="display-amount"></div>
+          <div class="seller-note" id="display-note"></div>
+        </div>
+        <div class="qr-instruction">
+          📱 Buyer opens camera or Venmo and scans to pay instantly.
+        </div>
+        <div class="url-box">
+          <div class="url-label">PAYMENT LINK</div>
+          <div id="display-url"></div>
+        </div>
+      </div>
+      <div class="qr-footer">
+        <button class="btn btn-secondary btn-sm" onclick="copyLink()">📋 Copy Link</button>
+        <button class="btn btn-secondary btn-sm" onclick="resetQR()">🔄 New Payment</button>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  TapPay · Web NFC + QR · No data stored · Works offline after load
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>
